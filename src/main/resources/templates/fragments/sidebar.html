@@ -1,0 +1,68 @@
+<div class="d-flex flex-column flex-shrink-0 p-3 bg-light" th:fragment="sidebar">
+	<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+		<svg class="bi me-2" width="40" height="32">
+			<use xlink:href="/home"></use>
+		</svg>
+		<span class="fs-4">Action</span>
+	</a>
+	<hr>
+	<ul class="nav nav-pills flex-column mb-auto">
+		<li class="nav-item">
+			<a href="/home" class="nav-link active" aria-current="page">
+				<svg class="bi me-2" width="16" height="16">
+					<use xlink:href="/home"></use>
+				</svg>
+				Home
+			</a>
+		</li>
+		<li>
+			<a href="/ping" class="nav-link link-dark">
+				<svg class="bi me-2" width="16" height="16">
+					<use xlink:href="/ping"></use>
+				</svg>
+				Ping
+			</a>
+		</li>
+		<li>
+			<a href="/scanFile" class="nav-link link-dark">
+				<svg class="bi me-2" width="16" height="16">
+					<use xlink:href="/scan"></use>
+				</svg>
+				Scan File
+			</a>
+		</li>
+		<li>
+			<a href="/scanFolder" class="nav-link link-dark">
+				<svg class="bi me-2" width="16" height="16">
+					<use xlink:href="/scan"></use>
+				</svg>
+				Scan Folder
+			</a>
+		</li>
+		<li>
+			<a href="/version" class="nav-link link-dark">
+				<svg class="bi me-2" width="16" height="16">
+					<use xlink:href="/version"></use>
+				</svg>
+				Version
+			</a>
+		</li>
+		<li>
+			<a href="/stats" class="nav-link link-dark">
+				<svg class="bi me-2" width="16" height="16">
+					<use xlink:href="/stats"></use>
+				</svg>
+				Stats
+			</a>
+		</li>
+		<li>
+			<a href="/reload" class="nav-link link-dark">
+				<svg class="bi me-2" width="16" height="16">
+					<use xlink:href="/reload"></use>
+				</svg>
+				Reload databases
+			</a>
+		</li>
+	</ul>
+	<hr>
+</div>

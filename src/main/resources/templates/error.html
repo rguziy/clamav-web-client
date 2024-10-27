@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+
+<head th:replace="~{fragments/header :: head}"></head>
+
+<body>
+	<div class="container">
+		<h1>Error Occurred!</h1>
+		<div class="alert alert-danger" role="alert">
+			<b> [<span th:text="${status}">status</span>] <span th:text="${error}">error</span>
+			</b>
+			<p th:text="${message}">message</p>
+		</div>
+	</div>
+	<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+
+</html>
