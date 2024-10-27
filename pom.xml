@@ -10,10 +10,10 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>info.trizub.clamav</groupId>
-	<artifactId>clamav-webclient</artifactId>
+	<artifactId>clamav-web-client</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>clamav-webclient</name>
+	<name>clamav-web-client</name>
 	<description>Web client for ClamAV</description>
 	<url />
 	<licenses>
