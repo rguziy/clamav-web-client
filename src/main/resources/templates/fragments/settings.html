@@ -1,0 +1,44 @@
+<div class="container" th:fragment="settings">
+	<div class="d-flex flex-column flex-shrink-0 p-3 bg-light">
+		<span class="fs-4">Settings</span>
+	</div>
+	<hr style="margin-top: 0px;">
+	<div align="left">
+		<div class="card w-50 mb-4">
+			<div class="card-header">
+				ClamAV service properties
+			</div>
+			<div class="card-body">
+				<div class="card-text">
+					<div id="waitingUpgrade" class="spinner-border" role="status" style="display: none;">
+						<span class="visually-hidden">Loading...</span>
+					</div>
+					<form class="row g-3" id="upgradeForm" th:action="@{/update}" method="post"
+						enctype="multipart/form-data">
+						<div class="col">
+							<label for="hostInput" class="form-label">Host</label>
+							<input th:value="${host}" type="text" class="form-control" id="hostInput" name="host"
+								required>
+						</div>
+						<div class="col">
+							<label for="portInput" class="form-label">Port</label>
+							<input th:value="${port}" type="text" class="form-control" id="portInput" name="port"
+								pattern="^(0|[1-9]\d*)$" required>
+						</div>
+						<div class="col">
+							<label for="platformInput" class="form-label">Platform</label>
+							<select class="form-select" name="platform" id="platformInput" aria-label="Platform">
+								<option value="UNIX" th:selected="(${platform} == 'UNIX')">Unix</option>
+								<option value="WINDOWS" th:selected="(${platform} == 'WINDOWS')">Windows</option>
+								<option value="JVM_PLATFORM" th:selected="(${platform} == 'JVM_PLATFORM')">Jvm</option>
+							</select>
+						</div>
+						<div class="col-12">
+							<button id="upgradeFormButton" class="btn btn-primary" type="submit">Upgrade</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

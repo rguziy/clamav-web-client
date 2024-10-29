@@ -1,7 +1,7 @@
 function updateNavItems() {
 	const elements = document.querySelectorAll('.nav-link');
 	let requestURI = window.location.pathname;
-	if (requestURI != null && requestURI === '/') {
+	if (requestURI != null && (requestURI == '/' || requestURI == '/update')) {
 		requestURI = '/home';
 	}
 	if (elements !== null && requestURI !== null) {
@@ -16,5 +16,21 @@ function updateNavItems() {
 				}
 			}
 		}
+	}
+}
+
+function addFormEventListener(formName, waitingId, formButton) {
+	// Get the form and the waiting screen elements
+	const form = document.getElementById(formName);
+	const waitingScreen = document.getElementById(waitingId);
+	const button = document.getElementById(formButton);
+	if (form !== null && waitingScreen !== null && button != null) {
+		// Add an event listener to the form's submit event
+		form.addEventListener('submit', (e) => {
+			// Display the waiting screen
+			waitingScreen.style.display = 'block';
+			// Disable submit button
+			button.disabled = true;
+		});
 	}
 }

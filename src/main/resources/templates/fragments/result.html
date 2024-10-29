@@ -1,0 +1,94 @@
+<div class="container" th:fragment="result">
+	<div class="d-flex flex-column flex-shrink-0 p-3 bg-light">
+		<span class="fs-4">Result</span>
+	</div>
+	<hr style="margin-top: 0px;">
+	<div align="left">
+		<span th:if="${action != null && action == 'scanFile'}">
+			<div class="card w-50 mb-4">
+				<div class="card-header">
+					Upload File
+				</div>
+				<div class="card-body">
+					<div class="card-text">
+						<div id="waitingUploadFile" class="spinner-border" role="status" style="display: none;">
+							<span class="visually-hidden">Loading...</span>
+						</div>
+						<form class="row g-3" id="uploadForm" th:action="@{/scanFile}" method="post"
+							enctype="multipart/form-data">
+							<div class="col">
+								<label for="fileInput" class="form-label">Select a file to upload</label>
+								<input value="" type="file" class="form-control" id="fileInput" name="file" required>
+							</div>
+							<div class="col-12">
+								<button id="uploadFormButton" class="btn btn-primary" type="submit">Submit</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</span>
+		<span th:if="${action != null && action == 'scanFolder'}">
+			<div class="card w-50 mb-4">
+				<div class="card-header">
+					Folder Path
+				</div>
+				<div class="card-body">
+					<div class="card-text">
+						<div id="waitingFolderScan" class="spinner-border" role="status" style="display: none;">
+							<span class="visually-hidden">Loading...</span>
+						</div>
+						<form class="row g-3" id="scanFolderForm" th:action="@{/scanFolder}" method="post"
+							enctype="multipart/form-data">
+							<div class="col">
+								<label for="folderInput" class="form-label">Select a folder to scan</label>
+								<input value="/scandir" type="text" class="form-control" id="folderInput" name="path"
+									required>
+							</div>
+							<div class="col-12">
+								<button id="scanFolderFormButton" class="btn btn-primary" type="submit">Submit</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</span>
+	</div>
+	<div align="left">
+		<span th:if="${status != null}">
+			<div class="card w-50 mb-4">
+				<div class="card-header">
+					Status
+				</div>
+				<span th:if="${status =='success'}">
+					<div class="card-body text-success">
+						<div class="card-text">
+							<p th:text="${status}" />
+						</div>
+					</div>
+				</span>
+				<span th:if="${status !='success'}">
+					<div class="card-body text-danger">
+						<div class=" card-text">
+							<p th:text="${status}" />
+						</div>
+					</div>
+				</span>
+			</div>
+		</span>
+	</div>
+	<div align="left">
+		<span th:if="${response != null}">
+			<div class="card">
+				<div class="card-header">
+					Response
+				</div>
+				<div class="card-body">
+					<div class="card-text">
+						<p th:text="${response}" />
+					</div>
+				</div>
+			</div>
+		</span>
+	</div>
+</div>

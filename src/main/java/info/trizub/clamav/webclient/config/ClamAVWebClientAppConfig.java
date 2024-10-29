@@ -8,7 +8,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 public class ClamAVWebClientAppConfig {
 
 	@Bean
-	public ResourceBundleMessageSource messageSource() {
+	ResourceBundleMessageSource messageSource() {
 		ResourceBundleMessageSource source = new ResourceBundleMessageSource();
 		source.setBasenames("messages");
 		source.setUseCodeAsDefaultMessage(true);

@@ -13,92 +13,12 @@
 				<div th:replace="~{fragments/sidebar :: sidebar}"></div>
 			</div>
 			<div class="col">
-				<div class="d-flex flex-column flex-shrink-0 p-3 bg-light" th:fragment="sidebar">
-					<span class="fs-4">Result</span>
-				</div>
-				<hr style="margin-top: 0px;">
-				<div align="left">
-					<span th:if="${action != null && action == 'scanFile'}">
-						<div class="card w-50 mb-4">
-							<div class="card-header">
-								Upload File
-							</div>
-							<div class="card-body">
-								<div class="card-text">
-									<form class="row g-3" th:action="@{/scanFile}" method="post"
-										enctype="multipart/form-data">
-										<div class="col">
-											<label for="ipInput" class="form-label">Select a file to upload</label>
-											<input value="" type="file" class="form-control" id="ipInput" name="file">
-										</div>
-										<div class="col-12">
-											<button class="btn btn-primary" type="submit">Submit</button>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-					</span>
-					<span th:if="${action != null && action == 'scanFolder'}">
-						<div class="card w-50 mb-4">
-							<div class="card-header">
-								Folder Path
-							</div>
-							<div class="card-body">
-								<div class="card-text">
-									<form class="row g-3" th:action="@{/scanFolder}" method="post"
-										enctype="multipart/form-data">
-										<div class="col">
-											<label for="ipInput" class="form-label">Select a folder to scan</label>
-											<input value="/scandir" type="text" class="form-control" id="ipInput"
-												name="path" required>
-										</div>
-										<div class="col-12">
-											<button class="btn btn-primary" type="submit">Submit</button>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-					</span>
-				</div>
-				<div align="left">
-					<span th:if="${status != null}">
-						<div class="card w-50 mb-4">
-							<div class="card-header">
-								Status
-							</div>
-							<span th:if="${status =='success'}">
-								<div class="card-body text-success">
-									<div class="card-text">
-										<p th:text="${status}" />
-									</div>
-								</div>
-							</span>
-							<span th:if="${status !='success'}">
-								<div class="card-body text-danger">
-									<div class=" card-text">
-										<p th:text="${status}" />
-									</div>
-								</div>
-							</span>
-						</div>
-					</span>
-				</div>
-				<div align="left">
-					<span th:if="${result != null}">
-						<div class="card">
-							<div class="card-header">
-								Response
-							</div>
-							<div class="card-body">
-								<div class="card-text">
-									<p th:text="${result}" />
-								</div>
-							</div>
-						</div>
-					</span>
-				</div>
+				<span th:if="${action == null || action != 'home'}">
+					<div th:replace="~{fragments/result :: result}"></div>
+				</span>
+				<span th:if="${action != null && action == 'home'}">
+					<div th:replace="~{fragments/settings :: settings}"></div>
+				</span>
 			</div>
 		</div>
 	</div>
@@ -111,6 +31,9 @@
 
 <script th:inline="javascript">
 	updateNavItems();
+	addFormEventListener('upgradeForm', 'waitingUpgrade', 'upgradeFormButton');
+	addFormEventListener('uploadForm', 'waitingUploadFile', 'uploadFormButton');
+	addFormEventListener('scanFolderForm', 'waitingFolderScan', 'scanFolderFormButton');
 </script>
 
 </html>
