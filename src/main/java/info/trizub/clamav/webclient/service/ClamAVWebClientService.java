@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.UnresolvedAddressException;
 import java.nio.file.Paths;
+import java.util.Map;
 import java.util.Properties;
 
 import org.springframework.stereotype.Service;
@@ -28,6 +29,40 @@ public class ClamAVWebClientService {
 	private final static String MODEL_SERVER_HOST_ATTRIBUTE = "host";
 	private final static String MODEL_SERVER_PORT_ATTRIBUTE = "port";
 	private final static String MODEL_SERVER_PLATFORM_ATTRIBUTE = "platform";
+
+	public enum Status {
+		SUCCESS("success"), ERROR("error"), VIRUSES_FOUND("Viruses found");
+
+		private String value;
+
+		Status(String value) {
+			this.value = value;
+		}
+
+		public String getValue() {
+			return value;
+		}
+	}
+
+	public enum Request {
+		DO_PING, GET_VERSION, DO_RELOAD_VIRUS_DATABASES, GET_STATS, DO_SCAN_FOLDER, DO_SCAN_FILE, SET_SERVER_PROPERTIES,
+		UPDATE_SERVER_PROPERTIES
+	}
+
+	public enum Response {
+		CONNECTION_PROBLEM("ClamAV service unavailable. Please check connection properties."),
+		VIRUSES_NOT_FOUND("Viruses not found");
+
+		private String value;
+
+		Response(String value) {
+			this.value = value;
+		}
+
+		public String getValue() {
+			return value;
+		}
+	}
 
 	private ClamavClient client;
 	private String status;
@@ -99,180 +134,89 @@ public class ClamAVWebClientService {
 		}
 	}
 
-	public void setServerProperties(Model model) {
+	@SuppressWarnings("unchecked")
+	public void requestHandler(Request request, Object input, Model model) {
 		initState();
+		ScanResult scanResult = null;
 		try {
-			loadServerProperties();
-			status = "success";
-			response = "ClamAV service properties have been loaded...";
-		} catch (ClamavException | IOException ex) {
-			status = "error";
-			if (ex.getCause() instanceof UnresolvedAddressException) {
-				response = "ClamAV service unavailable. Please check connection properties.";
-			} else if (ex.getCause().getMessage() != null) {
-				response = ex.getCause().getMessage();
-			} else {
-				response = ex.getMessage();
-			}
-		}
-		setState(model);
-		model.addAttribute(MODEL_SERVER_HOST_ATTRIBUTE, serverHost);
-		model.addAttribute(MODEL_SERVER_PORT_ATTRIBUTE, serverPort);
-		model.addAttribute(MODEL_SERVER_PLATFORM_ATTRIBUTE, serverPlatform);
-	}
-
-	public void updateServerProperties(String server, String port, String platform, Model model) {
-		initState();
-		initServerSettings();
-		Properties props = new Properties();
-		try (FileInputStream in = new FileInputStream(CLAMAV_SERVICE_PROPERTIES_FILE)) {
-			props.load(in);
-			try (FileOutputStream out = new FileOutputStream(CLAMAV_SERVICE_PROPERTIES_FILE)) {
-				props.setProperty(CLAMAV_SERVICE_HOST_PROPERTY, server);
-				props.setProperty(CLAMAV_SERVICE_PORT_PROPERTY, port);
-				props.setProperty(CLAMAV_SERVICE_PLATFORM_PROPERTY, platform);
-				props.store(out, null);
+			switch (request) {
+			case SET_SERVER_PROPERTIES:
 				loadServerProperties();
-				status = "success";
-				response = "ClamAV service properies have been updated...";
-			}
-		} catch (IOException ex) {
-			status = "error";
-			if (ex.getCause().getMessage() != null) {
-				response = ex.getCause().getMessage();
-			} else {
-				response = ex.getMessage();
-			}
-		}
-		setState(model);
-	}
-
-	public void doPing(Model model) {
-		initState();
-		try {
-			getClamavClient().ping();
-			status = "success";
-			response = "Pong";
-		} catch (ClamavException | IOException ex) {
-			status = "error";
-			if (ex.getCause() instanceof UnresolvedAddressException) {
-				response = "ClamAV service unavailable. Please check connection properties.";
-			} else if (ex.getCause().getMessage() != null) {
-				response = ex.getCause().getMessage();
-			} else {
-				response = ex.getMessage();
-			}
-		}
-		setState(model);
-	}
-
-	public void getVersion(Model model) {
-		initState();
-		try {
-			response = getClamavClient().version();
-			status = "success";
-		} catch (ClamavException | IOException ex) {
-			status = "error";
-			if (ex.getCause() instanceof UnresolvedAddressException) {
-				response = "ClamAV service unavailable. Please check connection properties.";
-			} else if (ex.getCause().getMessage() != null) {
-				response = ex.getCause().getMessage();
-			} else {
-				response = ex.getMessage();
-			}
-		}
-		setState(model);
-	}
-
-	public void doReloadVirusDatabases(Model model) {
-		initState();
-		try {
-			getClamavClient().reloadVirusDatabases();
-			status = "success";
-			response = "Virus databases have been reloaded...";
-		} catch (ClamavException | IOException ex) {
-			status = "error";
-			if (ex.getCause() instanceof UnresolvedAddressException) {
-				response = "ClamAV service unavailable. Please check connection properties.";
-			} else if (ex.getCause().getMessage() != null) {
-				response = ex.getCause().getMessage();
-			} else {
-				response = ex.getMessage();
-			}
-		}
-		setState(model);
-	}
-
-	public void getStats(Model model) {
-		initState();
-		try {
-			response = getClamavClient().stats();
-			status = "success";
-		} catch (ClamavException | IOException ex) {
-			status = "error";
-			if (ex.getCause() instanceof UnresolvedAddressException) {
-				response = "ClamAV service unavailable. Please check connection properties.";
-			} else if (ex.getCause().getMessage() != null) {
-				response = ex.getCause().getMessage();
-			} else {
-				response = ex.getMessage();
-			}
-		}
-		setState(model);
-	}
-
-	public void doScanFolder(String path, Model model) {
-		initState();
-		if (path != null && !path.isBlank()) {
-			try {
-				ScanResult scanResult = getClamavClient().parallelScan(Paths.get(path));
+				status = Status.SUCCESS.getValue();
+				response = "ClamAV service properties have been loaded...";
+				model.addAttribute(MODEL_SERVER_HOST_ATTRIBUTE, serverHost);
+				model.addAttribute(MODEL_SERVER_PORT_ATTRIBUTE, serverPort);
+				model.addAttribute(MODEL_SERVER_PLATFORM_ATTRIBUTE, serverPlatform);
+				break;
+			case UPDATE_SERVER_PROPERTIES:
+				initServerSettings();
+				Properties props = new Properties();
+				try (FileInputStream in = new FileInputStream(CLAMAV_SERVICE_PROPERTIES_FILE)) {
+					props.load(in);
+					try (FileOutputStream out = new FileOutputStream(CLAMAV_SERVICE_PROPERTIES_FILE)) {
+						props.setProperty(CLAMAV_SERVICE_HOST_PROPERTY, ((Map<String, String>) input).get("server"));
+						props.setProperty(CLAMAV_SERVICE_PORT_PROPERTY, ((Map<String, String>) input).get("port"));
+						props.setProperty(CLAMAV_SERVICE_PLATFORM_PROPERTY,
+								((Map<String, String>) input).get("platform"));
+						props.store(out, null);
+						loadServerProperties();
+						status = Status.SUCCESS.getValue();
+						response = "ClamAV service properies have been updated...";
+					}
+				}
+				break;
+			case DO_PING:
+				getClamavClient().ping();
+				status = Status.SUCCESS.getValue();
+				response = "Pong";
+				break;
+			case GET_VERSION:
+				response = getClamavClient().version();
+				status = Status.SUCCESS.getValue();
+				break;
+			case DO_RELOAD_VIRUS_DATABASES:
+				getClamavClient().reloadVirusDatabases();
+				status = Status.SUCCESS.getValue();
+				response = "Virus databases have been reloaded...";
+				break;
+			case GET_STATS:
+				response = getClamavClient().stats();
+				status = Status.SUCCESS.getValue();
+				break;
+			case DO_SCAN_FOLDER:
+				scanResult = getClamavClient().parallelScan(Paths.get((String) input));
 				if (scanResult instanceof ScanResult.OK) {
-					status = "success";
-					response = "Viruses not found";
+					status = Status.SUCCESS.getValue();
+					response = Response.VIRUSES_NOT_FOUND.getValue();
 				} else if (scanResult instanceof ScanResult.VirusFound) {
-					status = "Found viruses";
+					status = Status.VIRUSES_FOUND.getValue();
 					response = ((ScanResult.VirusFound) scanResult).getFoundViruses().toString();
 				}
-			} catch (ClamavException | IOException ex) {
-				status = "error";
-				if (ex.getCause() instanceof UnresolvedAddressException) {
-					response = "ClamAV service unavailable. Please check connection properties.";
-				} else if (ex.getCause().getMessage() != null) {
-					response = ex.getCause().getMessage();
-				} else {
-					response = ex.getMessage();
+				break;
+			case DO_SCAN_FILE:
+				scanResult = getClamavClient().scan(((MultipartFile) input).getInputStream());
+				if (scanResult instanceof ScanResult.OK) {
+					status = Status.SUCCESS.getValue();
+					response = Response.VIRUSES_NOT_FOUND.getValue();
+				} else if (scanResult instanceof ScanResult.VirusFound) {
+					status = Status.VIRUSES_FOUND.getValue();
+					response = ((ScanResult.VirusFound) scanResult).getFoundViruses().toString();
 				}
+				break;
+			default:
+				break;
+			}
+		} catch (ClamavException | IOException ex) {
+			status = Status.ERROR.getValue();
+			if (ex.getCause() instanceof UnresolvedAddressException) {
+				response = Response.CONNECTION_PROBLEM.getValue();
+			} else if (ex.getCause().getMessage() != null) {
+				response = ex.getCause().getMessage();
+			} else {
+				response = ex.getMessage();
 			}
 		}
 		setState(model);
 	}
 
-	public void doScanFile(MultipartFile file, Model model) {
-		initState();
-		if (file != null && !file.isEmpty()) {
-			try {
-				ScanResult scanResult = getClamavClient().scan(file.getInputStream());
-				if (scanResult instanceof ScanResult.OK) {
-					status = "success";
-					response = "Viruses not found";
-				} else if (scanResult instanceof ScanResult.VirusFound) {
-					status = "Found viruses";
-					response = ((ScanResult.VirusFound) scanResult).getFoundViruses().toString();
-				}
-			} catch (ClamavException | IOException ex) {
-				status = "error";
-				if (ex.getCause() instanceof UnresolvedAddressException) {
-					response = "ClamAV service unavailable. Please check connection properties.";
-				} else if (ex.getCause().getMessage() != null) {
-					response = ex.getCause().getMessage();
-				} else {
-					response = ex.getMessage();
-				}
-			}
-		} else {
-			status = "error";
-			response = "File not found or empty";
-		}
-		setState(model);
-	}
 }
