@@ -8,22 +8,21 @@
 		<span class="fs-1">ClamAV Web Client</span>
 	</div>
 	<div class="container" style="margin-left: 10px;">
+		<div class="row align-items-end">
+			<div th:replace="~{fragments/language :: language}"></div>
+		</div>
 		<div class="row align-items-start">
 			<div class="col" style="max-width: 260px;">
 				<div th:replace="~{fragments/sidebar :: sidebar}"></div>
 			</div>
 			<div class="col">
-				<span th:if="${action == null || action != 'home'}">
+				<span th:if="${action == null || action != 'settings'}">
 					<div th:replace="~{fragments/result :: result}"></div>
 				</span>
-				<span th:if="${action != null && action == 'home'}">
+				<span th:if="${action != null && action == 'settings'}">
 					<div th:replace="~{fragments/settings :: settings}"></div>
 				</span>
 			</div>
-		</div>
-	</div>
-	<div class="col">
-		<div align="left">
 		</div>
 	</div>
 	<div th:replace="~{fragments/footer :: footer}"></div>
