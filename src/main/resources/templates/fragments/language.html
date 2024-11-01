@@ -1,12 +1,18 @@
 <div class="dropdown d-flex align-items-end flex-column" style="padding-right: 25px;" th:fragment="language">
 	<a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-		style="text-decoration: none;">
+		style="text-decoration: none;"
+		th:if="${session == null || session.language == null || session.language == 'en'}">
 		<i class="fi-gb" style="width: 18px;height: 10px;margin-right: 10px;display: inline-block;"></i>English
 	</a>
+	<a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+		style="text-decoration: none;"
+		th:if="${session != null && session.language != null && session.language == 'uk'}">
+		<i class="fi-ua" style="width: 18px;height: 10px;margin-right: 10px;display: inline-block;"></i>Ukrainian
+	</a>
 	<ul class="dropdown-menu">
-		<li><a class="dropdown-item" href="#"><i class="fi-gb"
+		<li><a class="dropdown-item" href="/setLocale?lang=en"><i class="fi-gb"
 					style="width: 18px;height: 10px;margin-right: 10px;display: inline-block;"></i>English</a></li>
-		<li><a class="dropdown-item" href="#"><i class="fi-ua"
+		<li><a class="dropdown-item" href="/setLocale?lang=uk"><i class="fi-ua"
 					style="width: 18px;height: 10px;margin-right: 10px;display: inline-block;"></i>Ukrainian</a></li>
 	</ul>
 </div>

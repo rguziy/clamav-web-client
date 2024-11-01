@@ -1,8 +1,8 @@
 function updateNavItems() {
 	const elements = document.querySelectorAll('.nav-link');
 	let requestURI = window.location.pathname;
-	if (requestURI != null && (requestURI == '/' || requestURI == '/update')) {
-		requestURI = '/main';
+	if (requestURI != null && (requestURI == '/' || requestURI == '/update' || requestURI.startsWith('/setLocale'))) {
+		requestURI = '/settings';
 	}
 	if (elements !== null && requestURI !== null) {
 		for (const element of elements) {

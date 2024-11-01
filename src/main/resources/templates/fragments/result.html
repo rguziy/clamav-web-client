@@ -42,8 +42,8 @@
 							enctype="multipart/form-data">
 							<div class="col">
 								<label for="folderInput" class="form-label">Select a folder to scan</label>
-								<input value="/scandir" type="text" class="form-control" id="folderInput" name="path"
-									required>
+								<input th:value="${scanFolder}" type="text" class="form-control" id="folderInput"
+									name="path" required>
 							</div>
 							<div class="col-12">
 								<button id="scanFolderFormButton" class="btn btn-primary" type="submit">Submit</button>
@@ -60,20 +60,17 @@
 				<div class="card-header">
 					Status
 				</div>
-				<span th:if="${status =='success'}">
-					<div class="card-body text-success">
-						<div class="card-text">
-							<p th:text="${status}" />
-						</div>
+				<div class="card-body text-success" th:if="${status =='success'}">
+					<div class="card-text">
+						<p th:text="#{web.main.status.success}" />
 					</div>
-				</span>
-				<span th:if="${status !='success'}">
-					<div class="card-body text-danger">
-						<div class=" card-text">
-							<p th:text="${status}" />
-						</div>
+				</div>
+				<div class="card-body text-danger" th:if="${status !='success'}">
+					<div class=" card-text">
+						<p th:text="#{web.main.status.failed}" th:if="${status =='failed'}" />
+						<p th:text="#{web.main.status.viruses.found}" th:if="${status =='viruses-found'}" />
 					</div>
-				</span>
+				</div>
 			</div>
 		</span>
 	</div>

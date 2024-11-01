@@ -15,7 +15,7 @@
 					</div>
 					<form class="row g-3" id="upgradeForm" th:action="@{/update}" method="post"
 						enctype="multipart/form-data">
-						<div class="col">
+						<div class="col" style="min-width: 200px;">
 							<label for="hostInput" class="form-label">Host</label>
 							<input th:value="${host}" type="text" class="form-control" id="hostInput" name="host"
 								required>

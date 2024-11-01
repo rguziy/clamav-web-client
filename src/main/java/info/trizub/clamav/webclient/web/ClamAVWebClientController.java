@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.LocaleResolver;
 
 import info.trizub.clamav.webclient.service.ClamAVWebClientService;
 import info.trizub.clamav.webclient.service.ClamAVWebClientService.Request;
@@ -18,6 +19,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class ClamAVWebClientController {
+
+	@Autowired
+	private LocaleResolver localeResolver;
 
 	private final static String MAIN_PAGE = "main";
 	private final static String MODEL_ACTION_ATTRIBUTE = "action";
@@ -43,7 +47,7 @@ public class ClamAVWebClientController {
 
 	@GetMapping(value = { "", "/", "/settings", "/main" })
 	public String settings(Model model) {
-		webClientService.requestHandler(Request.SET_SERVER_PROPERTIES, null, model);
+		webClientService.requestHandler(Request.GET_SERVICE_PROPERTIES, null, model);
 		model.addAttribute(MODEL_ACTION_ATTRIBUTE, Action.SETTINGS.getValue());
 		return MAIN_PAGE;
 	}
@@ -51,7 +55,7 @@ public class ClamAVWebClientController {
 	@PostMapping("/update")
 	public String update(@RequestParam(required = true) String host, @RequestParam(required = true) String port,
 			@RequestParam(required = true) String platform, Model model) {
-		webClientService.requestHandler(Request.UPDATE_SERVER_PROPERTIES,
+		webClientService.requestHandler(Request.UPDATE_SERVICE_PROPERTIES,
 				Map.of("server", host, "port", port, "platform", platform), model);
 		model.addAttribute(MODEL_ACTION_ATTRIBUTE, Action.UPDATE_RESULT.getValue());
 		return MAIN_PAGE;
@@ -87,6 +91,7 @@ public class ClamAVWebClientController {
 
 	@GetMapping("/scanFolder")
 	public String scanFolder(Model model) {
+		webClientService.requestHandler(Request.GET_SCAN_FOLDER, null, model);
 		model.addAttribute(MODEL_ACTION_ATTRIBUTE, Action.SCAN_FOLDER.getValue());
 		return MAIN_PAGE;
 	}
@@ -112,9 +117,12 @@ public class ClamAVWebClientController {
 	}
 
 	@GetMapping("/setLocale")
-	public String setLocale(@RequestParam String lang, HttpServletRequest request, HttpServletResponse response) {
+	public String setLocale(@RequestParam String lang, HttpServletRequest request, HttpServletResponse response,
+			Model model) {
+		webClientService.requestHandler(Request.SET_LANGUAGE, lang, model);
 		Locale locale = new Locale(lang);
-		request.getSession().setAttribute("LOCALE", locale);
-		return MAIN_PAGE;
+		localeResolver.setLocale(request, response, locale);
+		request.getSession().setAttribute("language", lang);
+		return settings(model);
 	}
 }
