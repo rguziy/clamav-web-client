@@ -32,11 +32,11 @@ public class ClamAVWebClientService {
 	private final static String CLAMAV_SERVICE_HOST_PROPERTY = "clamav.service.host";
 	private final static String CLAMAV_SERVICE_PORT_PROPERTY = "clamav.service.port";
 	private final static String CLAMAV_SERVICE_PLATFORM_PROPERTY = "clamav.service.platform";
-	private final static String CLAMAV_SERVICE_SCAN_FOLDER_PROPERTY = "clamav.service.scan.folder";
+	private final static String CLAMAV_CLIENT_SCAN_FOLDER_PROPERTY = "clamav.client.scan.folder";
 	private final static String CLAMAV_CLIENT_LANGUAGE_PROPERTY = "clamav.client.language";
 
-	private final static String MODEL_STATUS_ATTRIBUTE = "status";
-	private final static String MODEL_RESPONSE_ATTRIBUTE = "response";
+	public final static String MODEL_STATUS_ATTRIBUTE = "status";
+	public final static String MODEL_RESPONSE_ATTRIBUTE = "response";
 	private final static String MODEL_SERVICE_HOST_ATTRIBUTE = "host";
 	private final static String MODEL_SERVICE_PORT_ATTRIBUTE = "port";
 	private final static String MODEL_SERVICE_PLATFORM_ATTRIBUTE = "platform";
@@ -49,11 +49,9 @@ public class ClamAVWebClientService {
 	private final static String RESPONSE_PROPERTIES_UPDATED_MESSAGE = "web.main.response.properties.updated";
 	private final static String RESPONSE_DATABASES_RELOADED_MESSAGE = "web.main.response.databases.reloaded";
 
-	private final static String DEFAULT_SCAN_FOLDER = "/scandir";
-
 	public enum Request {
-		DO_PING, GET_VERSION, DO_RELOAD_VIRUS_DATABASES, GET_STATS, GET_SCAN_FOLDER, DO_SCAN_FOLDER, DO_SCAN_FILE,
-		GET_SERVICE_PROPERTIES, UPDATE_SERVICE_PROPERTIES, SET_LANGUAGE
+		GET_VERSION, GET_STATS, GET_SERVICE_PROPERTIES, GET_SCAN_FOLDER, GET_PING, GET_LANGUAGE, RELOAD_VIRUS_DATABASES,
+		SCAN_FOLDER, SCAN_FILE, UPDATE_SERVICE_PROPERTIES, UPDATE_LANGUAGE
 	}
 
 	public enum Status {
@@ -76,7 +74,7 @@ public class ClamAVWebClientService {
 	private String serviceHost;
 	private String servicePort;
 	private String servicePlatform;
-	private String serviceScanFolder;
+	private String clientScanFolder;
 	private String clientLanguage;
 
 	public ClamAVWebClientService() {
@@ -90,15 +88,19 @@ public class ClamAVWebClientService {
 	}
 
 	private void setState(Model model) {
-		model.addAttribute(MODEL_STATUS_ATTRIBUTE, status);
-		model.addAttribute(MODEL_RESPONSE_ATTRIBUTE, response);
+		if (model != null) {
+			model.addAttribute(MODEL_STATUS_ATTRIBUTE, status);
+			model.addAttribute(MODEL_RESPONSE_ATTRIBUTE, response);
+		}
 	}
 
 	private void initProperties() {
-		client = null;
 		serviceHost = null;
 		servicePort = null;
 		servicePlatform = null;
+		clientScanFolder = null;
+		clientLanguage = null;
+		client = null;
 	}
 
 	private ClamavClient getClamavClient() throws IOException {
@@ -138,10 +140,10 @@ public class ClamAVWebClientService {
 				if (props.containsKey(CLAMAV_SERVICE_PLATFORM_PROPERTY)) {
 					servicePlatform = props.getProperty(CLAMAV_SERVICE_PLATFORM_PROPERTY);
 				}
-				if (serviceScanFolder == null && props.containsKey(CLAMAV_SERVICE_SCAN_FOLDER_PROPERTY)) {
-					serviceScanFolder = props.getProperty(CLAMAV_SERVICE_SCAN_FOLDER_PROPERTY);
+				if (props.containsKey(CLAMAV_CLIENT_SCAN_FOLDER_PROPERTY)) {
+					clientScanFolder = props.getProperty(CLAMAV_CLIENT_SCAN_FOLDER_PROPERTY);
 				}
-				if (clientLanguage == null && props.containsKey(CLAMAV_CLIENT_LANGUAGE_PROPERTY)) {
+				if (props.containsKey(CLAMAV_CLIENT_LANGUAGE_PROPERTY)) {
 					clientLanguage = props.getProperty(CLAMAV_CLIENT_LANGUAGE_PROPERTY);
 				}
 			}
@@ -161,20 +163,22 @@ public class ClamAVWebClientService {
 	public void requestHandler(Request request, Object input, Model model) {
 		initState();
 		ScanResult scanResult = null;
+		Properties props = null;
 		try {
 			switch (request) {
 			case GET_SERVICE_PROPERTIES:
-				loadProperties();
-				status = Status.SUCCESS.getValue();
-				response = getMessage(RESPONSE_PROPERTIES_LOADED_MESSAGE);
+				if (serviceHost == null || servicePort == null || servicePlatform == null) {
+					loadProperties();
+				}
 				model.addAttribute(MODEL_SERVICE_HOST_ATTRIBUTE, serviceHost);
 				model.addAttribute(MODEL_SERVICE_PORT_ATTRIBUTE, servicePort);
 				model.addAttribute(MODEL_SERVICE_PLATFORM_ATTRIBUTE, servicePlatform);
+				status = Status.SUCCESS.getValue();
+				response = getMessage(RESPONSE_PROPERTIES_LOADED_MESSAGE);
 				break;
 			case UPDATE_SERVICE_PROPERTIES:
-				initProperties();
-				Properties props = new Properties();
 				try (FileInputStream in = new FileInputStream(CLAMAV_WEB_CLIENT_PROPERTIES_FILE)) {
+					props = new Properties();
 					props.load(in);
 					try (FileOutputStream out = new FileOutputStream(CLAMAV_WEB_CLIENT_PROPERTIES_FILE)) {
 						props.setProperty(CLAMAV_SERVICE_HOST_PROPERTY, ((Map<String, String>) input).get("server"));
@@ -182,16 +186,31 @@ public class ClamAVWebClientService {
 						props.setProperty(CLAMAV_SERVICE_PLATFORM_PROPERTY,
 								((Map<String, String>) input).get("platform"));
 						props.store(out, null);
-						loadProperties();
-						status = Status.SUCCESS.getValue();
-						response = getMessage(RESPONSE_PROPERTIES_UPDATED_MESSAGE);
+					}
+				}
+				loadProperties();
+				status = Status.SUCCESS.getValue();
+				response = getMessage(RESPONSE_PROPERTIES_UPDATED_MESSAGE);
+				break;
+			case GET_LANGUAGE:
+				if (clientLanguage == null || clientLanguage.isBlank()) {
+					loadProperties();
+				}
+				status = Status.SUCCESS.getValue();
+				response = clientLanguage;
+				break;
+			case UPDATE_LANGUAGE:
+				clientLanguage = (String) input;
+				props = new Properties();
+				try (FileInputStream in = new FileInputStream(CLAMAV_WEB_CLIENT_PROPERTIES_FILE)) {
+					props.load(in);
+					try (FileOutputStream out = new FileOutputStream(CLAMAV_WEB_CLIENT_PROPERTIES_FILE)) {
+						props.setProperty(CLAMAV_CLIENT_LANGUAGE_PROPERTY, clientLanguage);
+						props.store(out, null);
 					}
 				}
 				break;
-			case SET_LANGUAGE:
-				clientLanguage = (String) input;
-				break;
-			case DO_PING:
+			case GET_PING:
 				getClamavClient().ping();
 				status = Status.SUCCESS.getValue();
 				response = getMessage(RESPONSE_PONG_MESSAGE);
@@ -200,7 +219,7 @@ public class ClamAVWebClientService {
 				response = getClamavClient().version();
 				status = Status.SUCCESS.getValue();
 				break;
-			case DO_RELOAD_VIRUS_DATABASES:
+			case RELOAD_VIRUS_DATABASES:
 				getClamavClient().reloadVirusDatabases();
 				status = Status.SUCCESS.getValue();
 				response = getMessage(RESPONSE_DATABASES_RELOADED_MESSAGE);
@@ -210,12 +229,12 @@ public class ClamAVWebClientService {
 				status = Status.SUCCESS.getValue();
 				break;
 			case GET_SCAN_FOLDER:
-				if (serviceScanFolder == null || serviceScanFolder.isBlank()) {
-					serviceScanFolder = DEFAULT_SCAN_FOLDER;
+				if (clientScanFolder == null || clientScanFolder.isBlank()) {
+					loadProperties();
 				}
-				model.addAttribute(MODEL_SERVICE_SCAN_FOLDER_ATTRIBUTE, serviceScanFolder);
+				model.addAttribute(MODEL_SERVICE_SCAN_FOLDER_ATTRIBUTE, clientScanFolder);
 				break;
-			case DO_SCAN_FOLDER:
+			case SCAN_FOLDER:
 				scanResult = getClamavClient().parallelScan(Paths.get((String) input));
 				if (scanResult instanceof ScanResult.OK) {
 					status = Status.SUCCESS.getValue();
@@ -224,9 +243,17 @@ public class ClamAVWebClientService {
 					status = Status.VIRUSES_FOUND.getValue();
 					response = ((ScanResult.VirusFound) scanResult).getFoundViruses().toString();
 				}
-				serviceScanFolder = (String) input;
+				clientScanFolder = (String) input;
+				props = new Properties();
+				try (FileInputStream in = new FileInputStream(CLAMAV_WEB_CLIENT_PROPERTIES_FILE)) {
+					props.load(in);
+					try (FileOutputStream out = new FileOutputStream(CLAMAV_WEB_CLIENT_PROPERTIES_FILE)) {
+						props.setProperty(CLAMAV_CLIENT_SCAN_FOLDER_PROPERTY, clientScanFolder);
+						props.store(out, null);
+					}
+				}
 				break;
-			case DO_SCAN_FILE:
+			case SCAN_FILE:
 				scanResult = getClamavClient().scan(((MultipartFile) input).getInputStream());
 				if (scanResult instanceof ScanResult.OK) {
 					status = Status.SUCCESS.getValue();
