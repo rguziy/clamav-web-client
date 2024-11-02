@@ -46,7 +46,7 @@ docker run -p 8080:8080 -e CLAMAV_HOST=clamav-server -e CLAMAV_PORT=3310 clamav-
 
 #### Docker Compose
 Alternatively, you can use Docker Compose to run the application with a ClamAV server:
-```
+```docker
 version: '3'
 services:
   clamav-web-ui:
@@ -80,12 +80,12 @@ cd clamav-web-ui
 ```
 
 3. ####  Build the Application
-```bash
+```maven
 mvn clean package
 ```
 
 4. #### Run the Application Use the following command to run the application:
-```bash
+```maven
 mvn spring-boot:run
 ```
 The application will start and be accessible at ``` http://localhost:8080 ```.
@@ -96,8 +96,13 @@ You can set environment variables similar to the Docker instructions by defining
 export CLAMAV_HOST=clamav-server
 export CLAMAV_PORT=3310
 ```
+## Contributing
+Feel free to fork this repository and submit pull requests.
+You can also submit issues in case of bugs or feature requests.
+
 ## License
 This project is distributed under the MIT License.
+The content of the license can be found in the `LICENSE` file under the root of this repository.
 
 ## Acknowledgements
 - cdarras for creating Java ClamAV Client Library ``` https://github.com/cdarras/clamav-client ``` .
