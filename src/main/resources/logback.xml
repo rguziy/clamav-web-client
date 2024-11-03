@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<logger name="org.springframework" level="ERROR" />
+	<logger name="info.trizub.clamav" level="DEBUG" />
+
+	<appender name="consoleAppender"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>
+				%black(%d{ISO8601}) %highlight(%-5level) [%blue(%t)]
+				%yellow(%C{1}): %msg%n%throwable
+			</Pattern>
+		</encoder>
+	</appender>
+
+	<root>
+		<level value="INFO" />
+		<appender-ref ref="consoleAppender" />
+	</root>
+</configuration>

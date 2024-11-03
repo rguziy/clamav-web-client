@@ -1,12 +1,10 @@
 <div class="dropdown d-flex align-items-end flex-column" style="padding-right: 25px;" th:fragment="language">
 	<a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-		style="text-decoration: none;"
-		th:if="${session == null || session.language == null || session.language == 'en'}">
+		style="text-decoration: none;" th:if="${language == null || language == 'en'}">
 		<i class="fi-gb" style="width: 18px;height: 10px;margin-right: 10px;display: inline-block;"></i>English
 	</a>
 	<a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-		style="text-decoration: none;"
-		th:if="${session != null && session.language != null && session.language == 'uk'}">
+		style="text-decoration: none;" th:if="${language != null && language == 'uk'}">
 		<i class="fi-ua" style="width: 18px;height: 10px;margin-right: 10px;display: inline-block;"></i>Ukrainian
 	</a>
 	<ul class="dropdown-menu">

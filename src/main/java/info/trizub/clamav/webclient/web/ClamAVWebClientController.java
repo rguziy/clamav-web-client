@@ -1,6 +1,5 @@
 package info.trizub.clamav.webclient.web;
 
-import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,25 +9,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.LocaleResolver;
 
 import info.trizub.clamav.webclient.service.ClamAVWebClientService;
 import info.trizub.clamav.webclient.service.ClamAVWebClientService.Request;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class ClamAVWebClientController {
-
-	@Autowired
-	private LocaleResolver localeResolver;
 
 	@Autowired
 	private ClamAVWebClientService webClientService;
 
 	private final static String MAIN_PAGE = "main";
 	private final static String MODEL_ACTION_ATTRIBUTE = "action";
-	private final static String DEFAULT_LANGUAGE = "en";
 
 	public enum Action {
 		SETTINGS("settings"), UPDATE_RESULT("update-result"), PING("ping"), VERSION("version"), STATS("stats"),
@@ -47,10 +39,7 @@ public class ClamAVWebClientController {
 	}
 
 	@GetMapping(value = { "", "/", "/settings", "/main" })
-	public String settings(HttpServletRequest request, HttpServletResponse response, Model model) {
-		if (request.getSession() != null && request.getSession().getAttribute("language") == null) {
-			updateLocale(request, response, model);
-		}
+	public String settings(Model model) {
 		webClientService.requestHandler(Request.GET_SERVICE_PROPERTIES, null, model);
 		model.addAttribute(MODEL_ACTION_ATTRIBUTE, Action.SETTINGS.getValue());
 		return MAIN_PAGE;
@@ -109,6 +98,7 @@ public class ClamAVWebClientController {
 
 	@GetMapping("/scanFile")
 	public String scanFile(Model model) {
+		webClientService.requestHandler(Request.GET_SCAN_FILE, null, model);
 		model.addAttribute(MODEL_ACTION_ATTRIBUTE, Action.SCAN_FILE.getValue());
 		return MAIN_PAGE;
 	}
@@ -121,23 +111,9 @@ public class ClamAVWebClientController {
 	}
 
 	@GetMapping("/setLocale")
-	public String setLocale(@RequestParam String lang, HttpServletRequest request, HttpServletResponse response,
-			Model model) {
+	public String setLocale(@RequestParam String lang, Model model) {
 		webClientService.requestHandler(Request.UPDATE_LANGUAGE, lang, model);
-		updateLocale(request, response, model);
-		return settings(request, response, model);
+		return settings(model);
 	}
 
-	private void updateLocale(HttpServletRequest request, HttpServletResponse response, Model model) {
-		webClientService.requestHandler(Request.GET_LANGUAGE, null, model);
-		String lang = null;
-		if (model.getAttribute(ClamAVWebClientService.MODEL_RESPONSE_ATTRIBUTE) != null) {
-			lang = (String) model.getAttribute(ClamAVWebClientService.MODEL_RESPONSE_ATTRIBUTE);
-		} else {
-			lang = DEFAULT_LANGUAGE;
-		}
-		Locale locale = new Locale(lang);
-		localeResolver.setLocale(request, response, locale);
-		request.getSession().setAttribute("language", lang);
-	}
 }
