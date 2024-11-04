@@ -1,40 +1,47 @@
 <div class="container" th:fragment="settings">
 	<div class="d-flex flex-column flex-shrink-0 p-3 bg-light">
-		<span class="fs-4">Settings</span>
+		<span class="fs-4" th:text="#{web.settings}">Settings</span>
 	</div>
 	<hr style="margin-top: 0px;">
 	<div align="left">
-		<div class="card w-50 mb-4">
-			<div class="card-header">
+		<div class="card w-75 mb-4">
+			<div class="card-header" th:text="#{web.settings.service.properties}">
 				ClamAV service properties
 			</div>
 			<div class="card-body">
 				<div class="card-text">
 					<div id="waitingUpgrade" class="spinner-border" role="status" style="display: none;">
-						<span class="visually-hidden">Loading...</span>
+						<span class="visually-hidden" th:text="#{web.settings.loading}">Loading...</span>
 					</div>
 					<form class="row g-3" id="upgradeForm" th:action="@{/update}" method="post"
 						enctype="multipart/form-data">
 						<div class="col" style="min-width: 200px;">
-							<label for="hostInput" class="form-label">Host</label>
+							<label for="hostInput" class="form-label" th:text="#{web.settings.host}">Host</label>
 							<input th:value="${host}" type="text" class="form-control" id="hostInput" name="host"
 								required>
 						</div>
 						<div class="col">
-							<label for="portInput" class="form-label">Port</label>
+							<label for="portInput" class="form-label" th:text="#{web.settings.port}">Port</label>
 							<input th:value="${port}" type="text" class="form-control" id="portInput" name="port"
 								pattern="^(0|[1-9]\d*)$" required>
 						</div>
 						<div class="col">
-							<label for="platformInput" class="form-label">Platform</label>
+							<label for="platformInput" class="form-label"
+								th:text="#{web.settings.platform}">Platform</label>
 							<select class="form-select" name="platform" id="platformInput" aria-label="Platform">
-								<option value="UNIX" th:selected="(${platform} == 'UNIX')">Unix</option>
-								<option value="WINDOWS" th:selected="(${platform} == 'WINDOWS')">Windows</option>
-								<option value="JVM_PLATFORM" th:selected="(${platform} == 'JVM_PLATFORM')">Jvm</option>
+								<option value="UNIX" th:selected="${#strings.equals(platform,'UNIX')}"
+									th:text="#{web.settings.platform.unix}">Unix</option>
+								<option value="WINDOWS" th:selected="${#strings.equals(platform,'WINDOWS')}"
+									th:text="#{web.settings.platform.windows}">Windows
+								</option>
+								<option value="JVM_PLATFORM" th:selected="${#strings.equals(platform,'JVM_PLATFORM')}"
+									th:text="#{web.settings.platform.jvm}">
+									JVM</option>
 							</select>
 						</div>
 						<div class="col-12">
-							<button id="upgradeFormButton" class="btn btn-primary" type="submit">Upgrade</button>
+							<button id="upgradeFormButton" class="btn btn-primary" type="submit"
+								th:text="#{web.settings.upgrade}">Upgrade</button>
 						</div>
 					</form>
 				</div>

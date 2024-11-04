@@ -4,15 +4,15 @@
 <head th:replace="~{fragments/header :: head}"></head>
 
 <body>
-	<div class="container text-center">
-		<span class="fs-1">ClamAV Web Client</span>
-	</div>
 	<div class="container" style="margin-left: 10px;">
+		<div class="row text-center">
+			<span class="fs-1" th:text="#{web.main.clamav.ui.client}">ClamAV Web UI Client</span>
+		</div>
 		<div class="row align-items-end">
 			<div th:replace="~{fragments/language :: language}"></div>
 		</div>
 		<div class="row align-items-start">
-			<div class="col" style="max-width: 260px;">
+			<div class="col" style="max-width: 300px;">
 				<div th:replace="~{fragments/sidebar :: sidebar}"></div>
 			</div>
 			<div class="col">
@@ -24,8 +24,10 @@
 				</span>
 			</div>
 		</div>
+		<div class="row text-center">
+			<div th:replace="~{fragments/footer :: footer}"></div>
+		</div>
 	</div>
-	<div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 
 <script th:inline="javascript">

@@ -1,21 +1,148 @@
-The MIT License (MIT)
+                    GNU LESSER GENERAL PUBLIC LICENSE
+                       Version 2.1, February 1999
 
-Copyright (c) 2024 Ruslan Huzii
+  Copyright (C) 1991, 1999 Free Software Foundation, Inc.
+  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+  Everyone is permitted to copy and distribute verbatim copies
+  of this license document, but changing it is not allowed.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+                   0. This License Agreement applies to any
+  software library or other program which contains a notice placed
+  by the copyright holder saying it may be distributed under the
+  terms of this Lesser General Public License. The "Library", below,
+  refers to any such software library or program, and a "work based
+  on the Library" means either the Library or any derivative work
+  under copyright law: that is to say, a work containing the Library
+  or a portion of it, either verbatim or with modifications.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+                   1. You may copy and distribute verbatim copies
+  of the Library's complete source code as you receive it, in any
+  medium, provided that you conspicuously and appropriately publish
+  on each copy an appropriate copyright notice and disclaimer of
+  warranty; keep intact all the notices that refer to this License
+  and to the absence of any warranty; and distribute a copy of this
+  License along with the Library.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+                   2. You may modify your copy or copies of the
+  Library or any portion of it, thus forming a work based on the
+  Library, and copy and distribute such modifications or work under
+  the terms of Section 1 above, provided that you also meet all of
+  these conditions:
+
+                     a) The modified work must itself be a software
+  library.
+
+                     b) You must cause the modified files to carry
+  prominent notices stating that you changed the files and the date
+  of any change.
+
+                     c) You must cause the whole of the work to be
+  licensed at no charge to all third parties under the terms of this
+  License.
+
+                     d) If a facility in the modified Library
+  refers to a function or a table of data to be supplied by an
+  application program that uses the facility, other than as an
+  argument passed when the facility is invoked, then you must make
+  a good faith effort to ensure that, in the event an application
+  does not supply such function or table, the facility still operates,
+  and performs its intended task. (For example, if the Library
+  allows access to a table of logarithms, and the application does
+  not supply it, then the Library must provide a default table, or
+  at least have a way of computing logarithms.)
+
+                   3. You may link the Library with other works
+  to produce a work based on the Library. You may copy and
+  distribute the resulting work under the terms of your choice,
+  provided that you also meet all of these conditions:
+
+                     a) The work must itself be a software library.
+
+                     b) The modified work must itself be a software
+  library.
+
+                     c) You must cause the whole of the work to be
+  licensed at no charge to all third parties under the terms of this
+  License.
+
+                     d) You must cause the modified files to carry
+  prominent notices stating that you changed the files and the date
+  of any change.
+
+                   4. You may distribute the Library in object code
+  form under the terms of Sections 1 and 2 above provided that you
+  do one of the following:
+
+                     a) Accompany it with the complete corresponding
+  machine-readable source code, which must be distributed under the
+  terms of Sections 1 and 2 above.
+
+                     b) Accompany it with a written offer, valid for
+  at least three years, to give anyone who possesses the object code
+  either (1) a copy of the complete corresponding machine-readable
+  source code, or (2) access to the source code for a reasonable
+  fee; this offer must be valid for at least three years and must
+  comply with the requirements of the previous paragraph.
+
+                   5. You may not impose any further restrictions
+  on the exercise of the rights granted or affirmed under this
+  License. For example, you may not impose a license fee, royalty,
+  or other charge for this License or for exercise of the rights
+  granted hereunder.
+
+                   6. This License is not intended to limit the
+  rights of the recipients of the Library's code under the terms of
+  the General Public License.
+
+                   7. The Free Software Foundation may publish
+  revised and/or new versions of the Lesser General Public License
+  from time to time. Such new versions will be similar in spirit to
+  the present version, but may differ in detail to address new
+  problems or concerns. Each version is given a distinguishing
+  version number. If the Library specifies a version number of this
+  License which applies to it and "any later version", you have the
+  option of following the terms and conditions either of that version
+  or of any later version published by the Free Software Foundation.
+
+                   8. If you wish to incorporate parts of the Library
+  into other free programs whose distribution terms are different, write
+  to the author to ask for permission. For software which is copyrighted
+  by the Free Software Foundation, write to the Free Software Foundation;
+ we sometimes make exceptions for this. Our decision will be guided by the
+  two goals of preserving the free status of all derivatives of our free
+  software and of promoting the sharing and reuse of software generally.
+
+                   9. There is no warranty for the Library. Except
+  when otherwise stated in writing the copyright holders and/or other
+  parties provide the Library "as is" without warranty of any kind,
+  either expressed or implied, including, but not limited to, the
+  implied warranties of merchantability and fitness for a particular
+  purpose. The entire risk as to the quality and performance of the
+  Library is with you. Should the Library prove defective, you assume
+  the cost of all necessary servicing, repair, or correction.
+
+                  10. In no event unless required by applicable law
+  or agreed to in writing will any copyright holder, or any other
+  party who modifies and/or conveys the Library, be liable to you for
+  damages, including any general, special, incidental or consequential
+  damages arising out of the use or inability to use the Library (including
+  but not limited to loss of data or data being rendered inaccurate or
+  losses sustained by you or third parties or a failure of the Library to
+  operate with any other software), even if such holder or other party
+  has been advised of the possibility of such damages.
+
+                  11. This License shall be governed by the laws of
+  the State of Massachusetts, USA. If you cannot comply with this License,
+  you must remove the Library from your distribution or otherwise cease
+  using it.
+
+                  12. If any portion of this License is held to be
+  invalid or unenforceable, that portion shall be interpreted in a manner
+  consistent with applicable law to affect the intent of the parties, and
+  the remaining portions shall remain in full force and effect.
+
+                  13. This License is in effect for all copies or
+  substantial portions of the Library. If you do not accept this License,
+  you may not use, modify, or distribute the Library.
+
+  END OF TERMS AND CONDITIONS

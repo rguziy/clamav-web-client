@@ -1,3 +1,13 @@
+/**
+ * Class Name: ClamAVWebClientAppConfig
+ * Description: This class defines beans to customize the Java-based configuration for Spring MVC.
+ * 
+ * Author: Ruslan Huzii
+ * Email:  ruslan@trizub.info
+ * Date: 2024-11-04
+ * 
+ * License: GNU Lesser General Public License v2.1
+ */
 package info.trizub.clamav.webclient.config;
 
 import java.util.Locale;

@@ -1,9 +1,7 @@
 <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" th:fragment="sidebar">
 	<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-		<svg class="bi me-2" width="40" height="32">
-			<use xlink:href="/"></use>
-		</svg>
-		<span class="fs-4">Action</span>
+		<img th:src="@{/images/logo.jpg}" alt="" style="width:50px;height:50px;">
+		<span class="fs-4" th:text="#{web.sidebar.action}" style="margin-left: 10px;">Action</span>
 	</a>
 	<hr>
 	<ul class="nav nav-pills flex-column mb-auto">
@@ -12,7 +10,7 @@
 				<svg class="bi me-2" width="16" height="16">
 					<use xlink:href="/settings"></use>
 				</svg>
-				Settings
+				<span th:text="#{web.sidebar.settings}">Settings</span>
 			</a>
 		</li>
 		<li>
@@ -20,7 +18,7 @@
 				<svg class="bi me-2" width="16" height="16">
 					<use xlink:href="/ping"></use>
 				</svg>
-				Ping
+				<span th:text="#{web.sidebar.ping}">Ping</span>
 			</a>
 		</li>
 		<li>
@@ -28,7 +26,7 @@
 				<svg class="bi me-2" width="16" height="16">
 					<use xlink:href="/scan"></use>
 				</svg>
-				Scan File
+				<span th:text="#{web.sidebar.scan.file}">Scan File</span>
 			</a>
 		</li>
 		<li>
@@ -36,7 +34,7 @@
 				<svg class="bi me-2" width="16" height="16">
 					<use xlink:href="/scan"></use>
 				</svg>
-				Scan Folder
+				<span th:text="#{web.sidebar.scan.folder}">Scan Folder</span>
 			</a>
 		</li>
 		<li>
@@ -44,7 +42,7 @@
 				<svg class="bi me-2" width="16" height="16">
 					<use xlink:href="/version"></use>
 				</svg>
-				Version
+				<span th:text="#{web.sidebar.version}">Version</span>
 			</a>
 		</li>
 		<li>
@@ -52,7 +50,7 @@
 				<svg class="bi me-2" width="16" height="16">
 					<use xlink:href="/stats"></use>
 				</svg>
-				Stats
+				<span th:text="#{web.sidebar.stats}">Stats</span>
 			</a>
 		</li>
 		<li>
@@ -60,7 +58,7 @@
 				<svg class="bi me-2" width="16" height="16">
 					<use xlink:href="/reload"></use>
 				</svg>
-				Reload databases
+				<span th:text="#{web.sidebar.reload.databases}">Reload databases</span>
 			</a>
 		</li>
 	</ul>

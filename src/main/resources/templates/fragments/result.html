@@ -1,27 +1,34 @@
 <div class="container" th:fragment="result">
 	<div class="d-flex flex-column flex-shrink-0 p-3 bg-light">
-		<span class="fs-4">Result</span>
+		<span class="fs-4" th:text="#{web.result}">Result</span>
 	</div>
 	<hr style="margin-top: 0px;">
 	<div align="left">
 		<span th:if="${action != null && action == 'scanFile'}">
-			<div class="card w-50 mb-4">
-				<div class="card-header">
+			<div class="card w-75 mb-4">
+				<div class="card-header" th:text="#{web.result.upload.file}">
 					Upload File
 				</div>
 				<div class="card-body">
 					<div class="card-text">
 						<div id="waitingUploadFile" class="spinner-border" role="status" style="display: none;">
-							<span class="visually-hidden">Loading...</span>
+							<span class="visually-hidden" th:text="#{web.result.loading}">Loading...</span>
 						</div>
 						<form class="row g-3" id="uploadForm" th:action="@{/scanFile}" method="post"
 							enctype="multipart/form-data">
 							<div class="col">
-								<label for="fileInput" class="form-label">Select a file to upload</label>
-								<input value="" type="file" class="form-control" id="fileInput" name="file" required>
+								<label for="fileInput" class="form-label" th:text="#{web.result.select.file}">Select a
+									file to upload</label>
+								<div class="custom-file-button input-group">
+									<label class="input-group-text" for="fileInput"
+										th:text="#{web.result.upload}">Upload</label>
+									<input value="" type="file" class="form-control" id="fileInput" name="file"
+										style="color:transparent;" onchange="this.style.color = 'black';" required>
+								</div>
 							</div>
 							<div class="col-12">
-								<button id="uploadFormButton" class="btn btn-primary" type="submit">Submit</button>
+								<button id="uploadFormButton" class="btn btn-primary" type="submit"
+									th:text="#{web.result.submit}">Submit</button>
 							</div>
 						</form>
 					</div>
@@ -29,24 +36,26 @@
 			</div>
 		</span>
 		<span th:if="${action != null && action == 'scanFolder'}">
-			<div class="card w-50 mb-4">
-				<div class="card-header">
+			<div class="card w-75 mb-4">
+				<div class="card-header" th:text="#{web.result.folder.path}">
 					Folder Path
 				</div>
 				<div class="card-body">
 					<div class="card-text">
 						<div id="waitingFolderScan" class="spinner-border" role="status" style="display: none;">
-							<span class="visually-hidden">Loading...</span>
+							<span class="visually-hidden" th:text="#{web.result.loading}">Loading...</span>
 						</div>
 						<form class="row g-3" id="scanFolderForm" th:action="@{/scanFolder}" method="post"
 							enctype="multipart/form-data">
 							<div class="col">
-								<label for="folderInput" class="form-label">Select a folder to scan</label>
+								<label for="folderInput" class="form-label" th:text="#{web.result.select.folder}">Select
+									a folder to scan</label>
 								<input th:value="${scanFolder}" type="text" class="form-control" id="folderInput"
 									name="path" required>
 							</div>
 							<div class="col-12">
-								<button id="scanFolderFormButton" class="btn btn-primary" type="submit">Submit</button>
+								<button id="scanFolderFormButton" class="btn btn-primary" type="submit"
+									th:text="#{web.result.submit}">Submit</button>
 							</div>
 						</form>
 					</div>
@@ -57,7 +66,7 @@
 	<div align="left">
 		<span th:if="${status != null}">
 			<div class="card w-50 mb-4">
-				<div class="card-header">
+				<div class="card-header" th:text="#{web.result.status}">
 					Status
 				</div>
 				<div class="card-body text-success" th:if="${status =='success'}">
@@ -76,8 +85,8 @@
 	</div>
 	<div align="left">
 		<span th:if="${response != null}">
-			<div class="card">
-				<div class="card-header">
+			<div class="card w-75">
+				<div class="card-header" th:text="#{web.result.response}">
 					Response
 				</div>
 				<div class="card-body">

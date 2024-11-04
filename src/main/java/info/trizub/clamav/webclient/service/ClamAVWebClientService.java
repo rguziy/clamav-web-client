@@ -1,3 +1,13 @@
+/**
+ * Class Name: ClamAVWebClientService
+ * Description: This class handles all business logic of application.
+ * 
+ * Author: Ruslan Huzii
+ * Email:  ruslan@trizub.info
+ * Date: 2024-11-04
+ * 
+ * License: GNU Lesser General Public License v2.1
+ */
 package info.trizub.clamav.webclient.service;
 
 import java.io.File;
@@ -45,6 +55,8 @@ public class ClamAVWebClientService {
 	private final static String DEFAULT_CLIENT_LANGUAGE = "en";
 	private final static String DEFAULT_CLIENT_SCAN_FOLDER = "/scandir";
 
+	private final static String CLAMAV_HOST_VARIABLE = "CLAMAV_HOST";
+	private final static String CLAMAV_PORT_VARIABLE = "CLAMAV_PORT";
 	private final static String CLAMAV_WEB_CLIENT_PROPERTIES_FILE = "conf/clamav-web-client.properties";
 	private final static String CLAMAV_SERVICE_HOST_PROPERTY = "clamav.service.host";
 	private final static String CLAMAV_SERVICE_PORT_PROPERTY = "clamav.service.port";
@@ -129,8 +141,8 @@ public class ClamAVWebClientService {
 		} catch (IOException ex) {
 			logger.error(ex.getMessage());
 		}
-		clamavHostVariable = System.getenv("CLAMAV_HOST");
-		clamavPortVariable = System.getenv("CLAMAV_PORT");
+		clamavHostVariable = System.getenv(CLAMAV_HOST_VARIABLE);
+		clamavPortVariable = System.getenv(CLAMAV_PORT_VARIABLE);
 		if (clamavHostVariable != null && !clamavHostVariable.isBlank()) {
 			serviceHost = clamavHostVariable;
 		} else if (clamavWebClientProperties.containsKey(CLAMAV_SERVICE_HOST_PROPERTY)) {
@@ -207,7 +219,7 @@ public class ClamAVWebClientService {
 				platform = Platform.UNIX;
 			} else if (name.equalsIgnoreCase(Platform.WINDOWS.name())) {
 				platform = Platform.WINDOWS;
-			} else if (name.equalsIgnoreCase(Platform.WINDOWS.name())) {
+			} else if (name.equalsIgnoreCase(Platform.JVM_PLATFORM.name())) {
 				platform = Platform.JVM_PLATFORM;
 			}
 		}

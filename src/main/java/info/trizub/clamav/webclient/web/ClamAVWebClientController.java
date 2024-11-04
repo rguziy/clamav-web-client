@@ -1,3 +1,13 @@
+/**
+ * Class Name: ClamAVWebClientController
+ * Description: This class handles the HTTP requests.
+ * 
+ * Author: Ruslan Huzii
+ * Email:  ruslan@trizub.info
+ * Date: 2024-11-04
+ * 
+ * License: GNU Lesser General Public License v2.1
+ */
 package info.trizub.clamav.webclient.web;
 
 import java.util.Map;

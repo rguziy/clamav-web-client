@@ -7,11 +7,44 @@ Welcome to the ClamAV Web UI Client! This Spring Boot MVC application provides a
 - **User-Friendly Interface**: Clean and simple design for easy navigation and use.
 - **Real-Time Scanning**: Initiate scans instantly from the web UI and view real-time results.
 - **File Upload**: Easily upload files for scanning directly from the web interface.
+- **Scan Folder**: Easily scan and analyze all files within a specified folder, as defined via the web interface.
 - **Custom Configuration**: Adjust ClamAV settings and configurations through the UI.
 - **Multi-User Support**: Allow multiple users to access and use the application.
+- **Multi-Language Support**: Enables users to interact with the application in their preferred language, enhancing accessibility and user experience.
 - **Responsive Design**: Optimized for both desktop and mobile devices.
 
 ## Running the Application
+
+### Run with Maven
+If you prefer to run the application directly without Docker, you can do so using Maven:
+
+1. #### Clone the Repository
+```bash
+git clone https://github.com/rguziy/clamav-web-client.git
+```
+
+2. #### Navigate to the Project Directory
+```bash
+cd clamav-web-client
+```
+
+3. ####  Build the Application
+```maven
+mvn clean package
+```
+
+4. #### Run the Application Use the following command to run the application:
+```maven
+mvn spring-boot:run
+```
+The application will start and be accessible at ``` http://localhost:8080 ```.
+
+5. #### Environment Variables 
+You can set environment variables by defining them in your command line before running the application:
+```bash
+export CLAMAV_HOST=clamav-server
+export CLAMAV_PORT=3310
+```
 
 ### Run with Docker
 The application can be easily deployed and managed in a Docker container:
@@ -66,45 +99,13 @@ services:
 ```
 Run ``` docker-compose up ``` to start both containers.
 
-### Run Without Docker (Using Maven)
-If you prefer to run the application directly without Docker, you can do so using Maven:
-
-1. #### Clone the Repository
-```bash
-git clone https://github.com/yourusername/clamav-web-ui.git
-```
-
-2. #### Navigate to the Project Directory
-```bash
-cd clamav-web-ui
-```
-
-3. ####  Build the Application
-```maven
-mvn clean package
-```
-
-4. #### Run the Application Use the following command to run the application:
-```maven
-mvn spring-boot:run
-```
-The application will start and be accessible at ``` http://localhost:8080 ```.
-
-5. #### Environment Variables 
-You can set environment variables similar to the Docker instructions by defining them in your command line before running the application:
-```bash
-export CLAMAV_HOST=clamav-server
-export CLAMAV_PORT=3310
-```
-## Contributing
-Feel free to fork this repository and submit pull requests.
-You can also submit issues in case of bugs or feature requests.
 
 ## License
-This project is distributed under the MIT License.
-The content of the license can be found in the `LICENSE` file under the root of this repository.
+This project is licensed under the GNU Lesser General Public License version 2.1.
+You can find the text of the license in the `LICENSE` file in the root directory of this repository.
 
 ## Acknowledgements
-- cdarras for creating Java ClamAV Client Library ``` https://github.com/cdarras/clamav-client ``` .
-- ClamAV team for creating the antivirus service.
-- Spring Boot team for creating the Spring Boot framework.
+- ClamAV team for creating the antivirus service ``` https://www.clamav.net ```.
+- Clement Darras for creating Java ClamAV Client Library ``` https://github.com/cdarras/clamav-client ``` .
+- Spring Boot team for creating the Spring Boot framework ``` https://spring.io/projects/spring-boot ```.
+- Bootstrap team for creating a powerful, feature-packed frontend toolkit ``` https://getbootstrap.com ```.

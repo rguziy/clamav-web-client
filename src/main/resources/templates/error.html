@@ -10,12 +10,12 @@
 				<svg class="bi me-2" width="16" height="16">
 					<use xlink:href="home"></use>
 				</svg>
-				Back
+				<span th:text="#{web.error.back}">Back</span>
 			</a>
 		</li>
 	</ul>
 	<div class="container">
-		<h1>Error Occurred!</h1>
+		<h1 th:text="#{web.error.occured}">Error Occurred!</h1>
 		<div class="alert alert-danger" role="alert">
 			<b> [<span th:text="${status}">status</span>] <span th:text="${error}">error</span>
 			</b>
