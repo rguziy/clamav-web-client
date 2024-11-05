@@ -97,7 +97,7 @@ services:
     ports:
       - "3310:3310"
 ```
-Run ``` docker-compose up ``` to start both containers.
+Run ``` docker-compose up ``` to start both containers.  
 Note: 
 ```
 Please wait until Clamd has been started before using Web Client. It usually takes about 1-2 minutes.
