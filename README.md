@@ -52,17 +52,17 @@ The application can be easily deployed and managed in a Docker container:
 #### Docker Image
 You can pull the pre-built Docker image from Docker Hub:
 ```bash
-docker pull yourusername/clamav-web-ui
+docker pull rguziy/clamav-web-client:latest
 ```
 Alternatively, you can build the image yourself by cloning this repository and running:
 ```bash
-docker build -t clamav-web-ui .
+docker build -t rguziy/clamav-web-client:latest .
 ```
 
 #### Running the Container
 To run the container, use the following command:
 ```bash
-docker run -p 8080:8080 clamav-web-ui
+docker run -p 8080:8080 rguziy/clamav-web-client:latest
 ```
 This will start the application and make it available at ``` http://localhost:8080 ```
 
@@ -74,7 +74,7 @@ You can configure the application by setting environment variables such as:
 
 For example:
 ```bash
-docker run -p 8080:8080 -e CLAMAV_HOST=clamav-server -e CLAMAV_PORT=3310 clamav-web-ui
+docker run -p 8080:8080 -e CLAMAV_HOST=clamav-server -e CLAMAV_PORT=3310 rguziy/clamav-web-client:latest
 ```
 
 #### Docker Compose
@@ -82,8 +82,8 @@ Alternatively, you can use Docker Compose to run the application with a ClamAV s
 ```docker
 version: '3'
 services:
-  clamav-web-ui:
-    image: yourusername/clamav-web-ui
+  clamav-web-client:
+    image: rguziy/clamav-web-client:latest
     ports:
       - "8080:8080"
     environment:
@@ -93,12 +93,15 @@ services:
       - clamav-server
 
   clamav-server:
-    image: clamav/clamav
+    image: clamav/clamav:latest
     ports:
       - "3310:3310"
 ```
 Run ``` docker-compose up ``` to start both containers.
-
+Note: 
+```
+Please wait until Clamd has been started before using Web Client. It usually takes about 1-2 minutes.
+```
 
 ## License
 This project is licensed under the GNU Lesser General Public License version 2.1.

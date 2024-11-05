@@ -1,0 +1,16 @@
+version: '3'
+services:
+  clamav-web-client:
+    image: rguziy/clamav-web-client:latest
+    ports:
+      - "8080:8080"
+    environment:
+      - CLAMAV_HOST=clamav-server
+      - CLAMAV_PORT=3310
+    depends_on:
+      - clamav-server
+
+  clamav-server:
+    image: clamav/clamav:latest
+    ports:
+      - "3310:3310"
