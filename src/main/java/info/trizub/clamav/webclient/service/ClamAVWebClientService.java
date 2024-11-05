@@ -17,6 +17,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.channels.UnresolvedAddressException;
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
@@ -66,6 +67,7 @@ public class ClamAVWebClientService {
 
 	public final static String MODEL_STATUS_ATTRIBUTE = "status";
 	public final static String MODEL_RESPONSE_ATTRIBUTE = "response";
+	public final static String MODEL_RESPONSES_ATTRIBUTE = "responses";
 	public final static String MODEL_LANGUAGE_ATTRIBUTE = "language";
 	private final static String MODEL_SERVICE_HOST_ATTRIBUTE = "host";
 	private final static String MODEL_SERVICE_PORT_ATTRIBUTE = "port";
@@ -104,6 +106,7 @@ public class ClamAVWebClientService {
 	private ClamavClient client;
 	private String status;
 	private String response;
+	private Map<String, Collection<String>> responses;
 	private String serviceHost;
 	private String servicePort;
 	private Platform servicePlatform;
@@ -202,12 +205,14 @@ public class ClamAVWebClientService {
 	private void initState() {
 		status = null;
 		response = null;
+		responses = null;
 	}
 
 	private void setState(Model model) {
 		if (model != null) {
 			model.addAttribute(MODEL_STATUS_ATTRIBUTE, status);
 			model.addAttribute(MODEL_RESPONSE_ATTRIBUTE, response);
+			model.addAttribute(MODEL_RESPONSES_ATTRIBUTE, responses);
 			model.addAttribute(MODEL_LANGUAGE_ATTRIBUTE, clientLanguage);
 		}
 	}
@@ -300,7 +305,11 @@ public class ClamAVWebClientService {
 					response = getMessage(RESPONSE_VIRUSES_NOT_FOUND_MESSAGE);
 				} else if (scanResult instanceof ScanResult.VirusFound) {
 					status = Status.VIRUSES_FOUND.getValue();
-					response = ((ScanResult.VirusFound) scanResult).getFoundViruses().toString();
+					response = null;
+					ScanResult.VirusFound result = (ScanResult.VirusFound) scanResult;
+					if (result.getFoundViruses() != null && !result.getFoundViruses().isEmpty()) {
+						responses = result.getFoundViruses();
+					}
 				}
 				clientScanFolder = (String) input;
 				updateProperties();
@@ -314,7 +323,11 @@ public class ClamAVWebClientService {
 					response = getMessage(RESPONSE_VIRUSES_NOT_FOUND_MESSAGE);
 				} else if (scanResult instanceof ScanResult.VirusFound) {
 					status = Status.VIRUSES_FOUND.getValue();
-					response = ((ScanResult.VirusFound) scanResult).getFoundViruses().toString();
+					response = null;
+					ScanResult.VirusFound result = (ScanResult.VirusFound) scanResult;
+					if (result.getFoundViruses() != null && !result.getFoundViruses().isEmpty()) {
+						responses = result.getFoundViruses();
+					}
 				}
 				break;
 			default:

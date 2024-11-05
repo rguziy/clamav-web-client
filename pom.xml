@@ -18,8 +18,8 @@
 	<url />
 	<licenses>
 		<license>
-			<name>MIT License</name>
-			<url>https://opensource.org/license/mit</url>
+			<name>GNU LESSER GENERAL PUBLIC LICENSE Version 2.1</name>
+			<url>https://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</url>
 		</license>
 	</licenses>
 	<developers>
@@ -29,7 +29,7 @@
 		</developer>
 	</developers>
 	<scm>
-		<connection>scm:git:git@github.com:cdarras/clamav-client.git</connection>
+		<connection>scm:git:git@github.com:rguziy/clamav-web-client.git</connection>
 		<developerConnection>scm:git:git@github.com:rguziy/clamav-web-client.git</developerConnection>
 		<url>git@github.com:rguziy/clamav-web-client.git</url>
 		<tag>HEAD</tag>
