@@ -33,7 +33,7 @@ cd clamav-web-client
 mvn clean package
 ```
 
-4. #### Run the Application Use the following command to run the application:
+4. #### Use the following command to run the application:
 ```maven
 mvn spring-boot:run
 ```
