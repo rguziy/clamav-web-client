@@ -3,6 +3,48 @@
 ## Overview
 Welcome to the ClamAV Web UI Client! This Spring Boot MVC application provides a user-friendly web interface for the popular ClamAV antivirus service, allowing users to easily manage and interact with the ClamAV back-end for efficient virus and malware scanning.
 
+## Screenshots
+
+### Settings
+Configure ClamAV host, port and application preferences.  
+![Settings](docs/screenshots/settings.png)
+
+---
+
+### File Scanning
+
+#### Scan File
+Upload a file to scan it for viruses and malware.  
+![Scan File](docs/screenshots/scan-file.png)
+
+#### Scan Results
+View detailed scan results with threat status and file information.  
+![Scan Results](docs/screenshots/results.png)
+
+#### Scan Folder
+Specify a folder path to scan all files within it.  
+![Scan Folder](docs/screenshots/scan-folder.png)
+
+---
+
+### ClamAV Management
+
+#### Ping
+Check the connection status of the ClamAV server.  
+![Ping](docs/screenshots/ping.png)
+
+#### Version
+Display the current ClamAV engine and database version.  
+![Version](docs/screenshots/version.png)
+
+#### Stats
+View real-time ClamAV server statistics and performance data.  
+![Stats](docs/screenshots/stats.png)
+
+#### Reload Database
+Trigger a live virus database reload without restarting the service.  
+![Reload Database](docs/screenshots/reload.png)
+
 ## Features
 - **User-Friendly Interface**: Clean and simple design for easy navigation and use.
 - **Real-Time Scanning**: Initiate scans instantly from the web UI and view real-time results.
