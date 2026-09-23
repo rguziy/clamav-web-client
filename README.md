@@ -5,8 +5,12 @@ Welcome to the ClamAV Web UI Client! This Spring Boot MVC application provides a
 
 ## Screenshots
 
+### Dark Mode
+Toggle between light and dark themes using the button in the top-right corner.
+![Dark Mode](docs/screenshots/dark-mode.png)
+
 ### Settings
-Configure ClamAV host, port and application preferences.  
+Configure ClamAV host, port and application preferences.
 ![Settings](docs/screenshots/settings.png)
 
 ---
@@ -14,15 +18,15 @@ Configure ClamAV host, port and application preferences.
 ### File Scanning
 
 #### Scan File
-Upload a file to scan it for viruses and malware.  
+Upload a file to scan it for viruses and malware.
 ![Scan File](docs/screenshots/scan-file.png)
 
 #### Scan Results
-View detailed scan results with threat status and file information.  
+View detailed scan results with threat status and file information.
 ![Scan Results](docs/screenshots/results.png)
 
 #### Scan Folder
-Specify a folder path to scan all files within it.  
+Specify a folder path to scan all files within it.
 ![Scan Folder](docs/screenshots/scan-folder.png)
 
 ---
@@ -30,19 +34,19 @@ Specify a folder path to scan all files within it.
 ### ClamAV Management
 
 #### Ping
-Check the connection status of the ClamAV server.  
+Check the connection status of the ClamAV server.
 ![Ping](docs/screenshots/ping.png)
 
 #### Version
-Display the current ClamAV engine and database version.  
+Display the current ClamAV engine and database version.
 ![Version](docs/screenshots/version.png)
 
 #### Stats
-View real-time ClamAV server statistics and performance data.  
+View real-time ClamAV server statistics and performance data.
 ![Stats](docs/screenshots/stats.png)
 
 #### Reload Database
-Trigger a live virus database reload without restarting the service.  
+Trigger a live virus database reload without restarting the service.
 ![Reload Database](docs/screenshots/reload.png)
 
 ## Features
@@ -54,6 +58,7 @@ Trigger a live virus database reload without restarting the service.
 - **Multi-User Support**: Allow multiple users to access and use the application.
 - **Multi-Language Support**: Enables users to interact with the application in their preferred language, enhancing accessibility and user experience.
 - **Responsive Design**: Optimized for both desktop and mobile devices.
+- **Dark Mode**: Switch between light and dark themes with one click. Your choice is remembered in the browser, and the OS color scheme is used by default.
 
 ## Running the Application
 
@@ -81,7 +86,7 @@ mvn spring-boot:run
 ```
 The application will start and be accessible at ``` http://localhost:8080 ```.
 
-5. #### Environment Variables 
+5. #### Environment Variables
 You can set environment variables by defining them in your command line before running the application:
 ```bash
 export CLAMAV_HOST=clamav-server
@@ -111,7 +116,7 @@ This will start the application and make it available at ``` http://localhost:80
 #### Environment Variables
 You can configure the application by setting environment variables such as:
 
-``` CLAMAV_HOST ```: the hostname or IP address of the ClamAV server  
+``` CLAMAV_HOST ```: the hostname or IP address of the ClamAV server
 ``` CLAMAV_PORT ```: the port number of the ClamAV server
 
 For example:
@@ -139,8 +144,8 @@ services:
     ports:
       - "3310:3310"
 ```
-Run ``` docker-compose up ``` to start both containers.  
-Note: 
+Run ``` docker-compose up ``` to start both containers.
+Note:
 ```
 Please wait until Clamd has been started before using Web Client. It usually takes about 1-2 minutes.
 ```

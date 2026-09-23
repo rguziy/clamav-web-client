@@ -1,5 +1,5 @@
 <div class="container" th:fragment="result">
-	<div class="d-flex flex-column flex-shrink-0 p-3 bg-light">
+	<div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary">
 		<span class="fs-4" th:text="#{web.result}">Result</span>
 	</div>
 	<hr style="margin-top: 0px;">
@@ -23,7 +23,7 @@
 									<label class="input-group-text" for="fileInput"
 										th:text="#{web.result.upload}">Upload</label>
 									<input value="" type="file" class="form-control" id="fileInput" name="file"
-										style="color:transparent;" onchange="this.style.color = 'black';" required>
+										style="color:transparent;" onchange="this.style.color = 'inherit';" required>
 								</div>
 							</div>
 							<div class="row g-2 w-50" style="max-width: 180px">

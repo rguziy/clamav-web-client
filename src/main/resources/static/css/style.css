@@ -11,6 +11,6 @@
 }
 
 .custom-file-button:hover label {
-	background-color: #dde0e3;
+	background-color: var(--bs-secondary-bg);
 	cursor: pointer;
 }

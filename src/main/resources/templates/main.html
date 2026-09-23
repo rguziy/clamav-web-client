@@ -9,7 +9,10 @@
 			<span class="fs-1" th:text="#{web.main.clamav.ui.client}">ClamAV Web UI Client</span>
 		</div>
 		<div class="row align-items-end">
-			<div th:replace="~{fragments/language :: language}"></div>
+			<div class="d-flex justify-content-end align-items-center" style="padding-right: 25px;">
+				<button th:replace="~{fragments/theme :: theme}"></button>
+				<div th:replace="~{fragments/language :: language}"></div>
+			</div>
 		</div>
 		<div class="row align-items-start">
 			<div class="col" style="max-width: 300px;">
@@ -32,6 +35,7 @@
 
 <script th:inline="javascript">
 	updateNavItems();
+	updateThemeToggle();
 	addFormEventListener('upgradeForm', 'waitingUpgrade', 'upgradeFormButton');
 	addFormEventListener('uploadForm', 'waitingUploadFile', 'uploadFormButton');
 	addFormEventListener('scanFolderForm', 'waitingFolderScan', 'scanFolderFormButton');
